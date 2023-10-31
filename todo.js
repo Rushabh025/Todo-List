@@ -9,9 +9,24 @@ function renderList () {}
 
 function markTaskAsComplete (taskId) {}
 
-function deleteTask (taskId) {}
+function deleteTask (taskId) {
+    const newTasks = tasks.filter(function(task){
+        return task.id !== taskId
+    })
+    tasks = newTasks;
+    renderList();
+    showNotification("Task Deleted");
+}
 
-function addTask (task) {}
+function addTask (task) {
+    if(task){
+        tasks.push(task);
+        renderList();
+        showNotification("Task Added");
+        return;
+    }
+    showNotification("Task cannot be added..!");
+}
 
 function showNotification(text) {
     alert(text);
