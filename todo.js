@@ -1,13 +1,47 @@
 const tasks = [];
-const taskList = document.getElementById('list');
+const tasksList = document.getElementById('list');
 const addTaskInput = document.getElementById('add');
 const tasksCounter = document.getElementById('tasks-counter');
 
 console.log('Working');
 
-function renderList () {}
+function addTaskToDOM(task){
+    const li = document.createElement('li');
 
-function markTaskAsComplete (taskId) {}
+    li.innerHTML = `
+    <li>
+        <input type="checkbox" id="${task.id}" ${task.done ? 'checked' : ''} class = "custom-checkox">
+        <label for="${task.id}">${task.text}</label>
+        <img src="bin.svg" class="delete" data-id="${task.id}" />
+    </li>
+    `;
+}
+
+function renderList () {
+    tasksList.innerHTML = '';
+
+    for(let i = 0; i < tasks.length; i++){
+        addTaskToDOM(tasks[i]);
+    }
+
+    tasksCounter.innerHTML = tasks.length;
+}
+
+function toggleTask (taskId) {
+    const newTasks = tasks.filter(function(task){
+        return task.id === taskId
+    })
+    if(taskId.length > 0){
+        const currentTask = task[0];
+
+        currentTask.done = !currentTask.done;
+        renderList();
+        showNotification('Task toggled successfully');
+        return;
+    }
+
+    showNotification('Could not toggle task');
+}
 
 function deleteTask (taskId) {
     const newTasks = tasks.filter(function(task){
@@ -33,23 +67,23 @@ function showNotification(text) {
 }
 
 function handleInputKeyPress(e){
-    if(key === 'Enter'){
+    if(e.key === 'Enter'){
         const text = e.target.value;
-    }
 
-    if(!text){
-        showNotification('Task text cannot be Empty');
-        return;
-    }
+        if(!text){
+            showNotification('Task text cannot be Empty');
+            return;
+        }
 
-    const task = {
-        text,
-        id : Date.now().toString(),
-        done : false
-    }
+        const task = {
+            text,
+            id : Date.now().toString(),
+            done : false
+        }
 
-    e.target.value = '';
-    addTask(task);
+        e.target.value = '';
+        addTask(task);
+    }
 }
 
 addTaskInput.addEventListener('keyup', handleInputKeyPress);
