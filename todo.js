@@ -1,20 +1,47 @@
-const tasks = [];
+let tasks = [];
 const tasksList = document.getElementById('list');
 const addTaskInput = document.getElementById('add');
 const tasksCounter = document.getElementById('tasks-counter');
 
 console.log('Working');
 
+async function fetchTodos(){
+    //GET request using fetch promise logic  
+    // fetch('https://jsonplaceholder.typicode.com/todos')
+    //     .then(function(response){
+    //         // console.log(response);
+    //         return response.json();
+    //     }).then(function(data){
+    //         tasks = data.slice(0, 10);
+    //         renderList();
+    //         // console.log(data);
+    //     })
+    //     .catch(function(error){
+    //         console.log('error',error);
+    //     })
+
+    //GET request using async await
+    try{
+        const response =  fetch('https://jsonplaceholder.typicode.com/todos');
+        const data = await response.json();
+        tasks = data.slice(0, 10);
+        renderList();
+    }catch(error){
+        console.log(error);
+    }
+}
+
 function addTaskToDOM(task){
     const li = document.createElement('li');
 
     li.innerHTML = `
     <li>
-        <input type="checkbox" id="${task.id}" ${task.done ? 'checked' : ''} class = "custom-checkox">
-        <label for="${task.id}">${task.text}</label>
+        <input type="checkbox" id="${task.id}" ${task.completed ? 'checked' : ''} class = "custom-checkox">
+        <label for="${task.id}">${task.title}</label>
         <img src="bin.svg" class="delete" data-id="${task.id}" />
     </li>
     `;
+    tasksList.append(li);
 }
 
 function renderList () {
@@ -29,12 +56,12 @@ function renderList () {
 
 function toggleTask (taskId) {
     const newTasks = tasks.filter(function(task){
-        return task.id === taskId
-    })
+        return task.id === Number(taskId)
+    });
     if(taskId.length > 0){
         const currentTask = task[0];
 
-        currentTask.done = !currentTask.done;
+        currentTask.completed = !currentTask.completed;
         renderList();
         showNotification('Task toggled successfully');
         return;
@@ -45,8 +72,8 @@ function toggleTask (taskId) {
 
 function deleteTask (taskId) {
     const newTasks = tasks.filter(function(task){
-        return task.id !== taskId
-    })
+        return task.id !== Number(taskId)
+    });
     tasks = newTasks;
     renderList();
     showNotification("Task Deleted");
@@ -76,9 +103,9 @@ function handleInputKeyPress(e){
         }
 
         const task = {
-            text,
-            id : Date.now().toString(),
-            done : false
+            title: text,
+            id : Date.now(),
+            completed : false
         }
 
         e.target.value = '';
@@ -101,6 +128,7 @@ function handleClickListener(e){
 }
 
 function initializeApp(){
+    fetchTodos();
     addTaskInput.addEventListener('keyup', handleInputKeyPress);
     document.addEventListener('click',handleClickListener);
 }
