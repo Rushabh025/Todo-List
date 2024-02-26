@@ -16,13 +16,12 @@
     // Function to create HTML for a task and append it to the list
     function addTaskToDOM(task) {
         const li = document.createElement('li');
+        li.classList = 'list-group-item';
 
         li.innerHTML = `
-            <li>
                 <input type="checkbox" id="${task.id}" ${task.completed ? 'checked' : ''} class="custom-checkbox">
                 <label for="${task.id}">${task.title}</label>
-                <img src="bin.svg" class="delete" data-id="${task.id}" />
-            </li>
+                <img src="bin.svg" class="delete float-end" data-id="${task.id}" />
         `;
         tasksList.append(li);
     }

@@ -4,6 +4,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  background-color: #F5E8C7;
+}
+
 /* Container styles */
 #container {
   width: 500px;
