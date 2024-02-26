@@ -27,15 +27,41 @@
         tasksList.append(li);
     }
 
-    // Function to render the entire list of tasks
-    function renderList() {
+    // Filter type (all, completed, not completed)
+    let filterType = 'all';
+
+     // Function to render the list based on the current filter
+     function renderList() {
         tasksList.innerHTML = '';
 
-        for (let i = 0; i < tasks.length; i++) {
-            addTaskToDOM(tasks[i]);
+        // Filter tasks based on the selected filter type
+        let filteredTasks = tasks;
+        if (filterType === 'completed') {
+            filteredTasks = tasks.filter(task => task.completed);
+        } else if (filterType === 'not-completed') {
+            filteredTasks = tasks.filter(task => !task.completed);
         }
 
-        tasksCounter.innerHTML = tasks.length;
+        // Display filtered tasks
+        for (let i = 0; i < filteredTasks.length; i++) {
+            addTaskToDOM(filteredTasks[i]);
+        }
+
+        tasksCounter.innerHTML = filteredTasks.length;
+    }
+
+    // Event handler for changing the filter type
+    function handleFilterChange(type) {
+        filterType = type;
+        renderList();
+    }
+
+    // Function to remove all completed tasks
+    function clearCompletedTasks() {
+        const newTasks = tasks.filter(task => !task.completed);
+        tasks = newTasks;
+        renderList();
+        showNotification('Completed tasks cleared');
     }
 
     // Function to toggle the completion status of a task
@@ -122,6 +148,19 @@
     function initializeApp() {
         addTaskInput.addEventListener('keyup', handleInputKeyPress);
         document.addEventListener('click', handleClickListener);
+
+        // Add event listeners for filter buttons or checkboxes
+        const allTasksButton = document.getElementById('all-tasks');
+        const completedTasksButton = document.getElementById('completed-tasks');
+        const notCompletedTasksButton = document.getElementById('not-completed-tasks');
+
+        allTasksButton.addEventListener('click', () => handleFilterChange('all'));
+        completedTasksButton.addEventListener('click', () => handleFilterChange('completed'));
+        notCompletedTasksButton.addEventListener('click', () => handleFilterChange('not-completed'));
+        
+        // Add event listener for the "Clear Completed" button
+        const clearCompletedButton = document.getElementById('clear-completed');
+        clearCompletedButton.addEventListener('click', clearCompletedTasks);
 
         // Fetch initial tasks (currently set to an empty array)
         fetchTodos();
