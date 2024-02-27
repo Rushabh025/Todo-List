@@ -1,5 +1,7 @@
 # Todo list app
-A todo list app
+A simple Todo list with vanilla JS 
+
+Demo Link : 
 
 
 ### General steps to follow when creating a project
@@ -19,3 +21,6 @@ A todo list app
 	- checkTodo
 	- renderTodosList
 	- showNotification
+
+ ## Screenshots
+ 
