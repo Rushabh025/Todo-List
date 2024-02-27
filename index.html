@@ -12,8 +12,10 @@
     <h1>Todo List App</h1>
     <div id="container">
       <input placeholder="Add a task" class="add-task" id="add" data-helloWord="asdasdas"/>
-      <span id="total-tasks">Total tasks: <span id="tasks-counter">0</span></span>
-      <button id="clear-completed">Clear Completed</button>
+      <div class="abc">
+        <span id="total-tasks">Total tasks: <span id="tasks-counter">0</span></span>
+        <button id="clear-completed" class="button-48" role="button"><span class="text">Clear Completed</span></button>
+      </div>
       <div class = "container">
         <ul id="list" class="list-group">
           <!-- <li>
@@ -22,12 +24,13 @@
             <img src="bin.svg" class="delete" data-id="12" />
           </li> -->
         </ul>
+        <div>
+          <button id="all-tasks" class="button-48" role="button"><span class="text">All Tasks</span></button>
+          <button id="completed-tasks" class="button-48" role="button"><span class="text">Completed Tasks</span></button>
+          <button id="not-completed-tasks" class="button-48" role="button"><span class="text">Not Completed Tasks</span></button>
+        </div>
       </div>
-      <div style="align-items: center;">
-        <button id="all-tasks">All Tasks</button>
-        <button id="completed-tasks">Completed Tasks</button>
-        <button id="not-completed-tasks">Not Completed Tasks</button>
-      </div>
+      
       
 
     </div>
