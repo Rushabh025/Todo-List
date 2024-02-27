@@ -8,6 +8,26 @@ body {
   background-color: #F5E8C7;
 }
 
+.input-container input:focus, .input-container input:active {
+  outline: none;
+}
+.input-container input {
+  width: 87%;
+  border: none;
+}
+
+.input-container button {
+  height: 50px;
+  width: 50px;
+  background-color: #facd5a;
+  cursor: pointer;
+}
+
+.input-button:hover {
+  background: #fcbd1d;
+  cursor: pointer;
+}
+
 /* Container styles */
 #container {
   width: 500px;
@@ -102,11 +122,9 @@ h1 {
 
 /* Add Task Input styles */
 .add-task {
-  width: 100%;
   outline: none;
   font-size: 15px;
   padding: 11px;
-  border: 1px solid #f3f3f3;
   margin-bottom: 3px;
 }
 
@@ -165,7 +183,6 @@ h1 {
 .button-48:hover:before {
   animation: opacityFallbackIn 0s step-start forwards;
   clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
-  
 }
 
 .button-48:after {
@@ -178,7 +195,6 @@ h1 {
 }
 
 .abc{
-  /* float: right; */
   display: flex;
   justify-content: space-between;
   padding-top: 10px;

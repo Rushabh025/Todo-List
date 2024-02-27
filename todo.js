@@ -1,4 +1,4 @@
-(function () {
+
     // Task-related data and DOM elements
     let tasks = [];
     const tasksList = document.getElementById('list');
@@ -21,7 +21,7 @@
         li.innerHTML = `
                 <input type="checkbox" id="${task.id}" ${task.completed ? 'checked' : ''} class="custom-checkbox">
                 <label for="${task.id}">${task.title}</label>
-                <img src="bin.svg" class="delete float-end" data-id="${task.id}" />
+                <img src="bin.svg" class="delete" data-id="${task.id}" />
         `;
         tasksList.append(li);
     }
@@ -74,11 +74,11 @@
 
             currentTask.completed = !currentTask.completed;
             renderList();
-            showNotification('Task toggled successfully');
+            // showNotification('Task Completed successfully');
             return;
         }
 
-        showNotification('Could not toggle task');
+        showNotification('Could not complete task');
     }
 
     // Function to delete a task
@@ -96,7 +96,7 @@
         if (task) {
             tasks.push(task);
             renderList();
-            showNotification('Task Added');
+            // showNotification('Task Added');
             return;
         }
         showNotification('Task cannot be added..!');
@@ -126,6 +126,22 @@
             e.target.value = '';
             addTask(task);
         }
+    }
+
+    function addText(){
+        const add = document.getElementById('add').value;
+        if (!add) {
+            showNotification('Task text cannot be Empty');
+            return;
+        }
+
+        const task = {
+            title: add,
+            id: Date.now(),
+            completed: false,
+        };
+        addTask(task);
+        document.getElementById('add').value = '';
     }
 
     // Event handler for clicks on the document
@@ -168,4 +184,3 @@
     // Initialize the application when the script is loaded
     initializeApp();
 
-})();
